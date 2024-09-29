@@ -12,6 +12,8 @@ function iniciarJuego() {
   botonAgua.addEventListener('click', ataqueAgua)
   let botonTierra = document.getElementById("boton-tierra")
   botonTierra.addEventListener('click', ataqueTierra)
+  let botonReiniciar = document.getElementById("boton-reiniciar")
+  botonReiniciar.addEventListener('click', reiniciarJuego)
 
 }
 
@@ -94,6 +96,7 @@ function combate() {
     vidasJugador--
     spanVidasJugador.innerHTML = vidasJugador
   }
+  revisarVidas()
 }
 
 function revisarVidas() {
@@ -116,10 +119,22 @@ function crearMensajeFinal(mensaje) {
   let parrafo = document.createElement("p")
   parrafo.innerHTML = mensaje
   secctionMensaje.appendChild(parrafo)
+
+  let botonFuego = document.getElementById("boton-fuego")
+  let botonAgua = document.getElementById("boton-agua")
+  let botonTierra = document.getElementById("boton-tierra")
+  botonFuego.disabled = true
+  botonAgua.disabled = true
+  botonTierra.disabled = true
+  
 }
 
 function aleatorio(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min)
+}
+
+function reiniciarJuego() {
+  location.reload()
 }
 
 window.addEventListener('load', iniciarJuego)
