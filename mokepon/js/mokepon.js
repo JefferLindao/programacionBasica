@@ -47,6 +47,7 @@ function ataqueFuego() {
   ataqueJugador = "FUEGO"
   ataquAlearioEnemigo()
 }
+
 function ataqueAgua() {
   ataqueJugador = "AGUA"
   ataquAlearioEnemigo()
@@ -69,7 +70,7 @@ function ataquAlearioEnemigo() {
   combate()
 }
 
-function combate(){
+function combate() {
   let spanVidasJugador = document.getElementById('vidas-jugador')
   let spanVidasEnemigo = document.getElementById('vidas-enemigo')
   if (ataqueEnemigo == ataqueJugador) {
@@ -95,10 +96,25 @@ function combate(){
   }
 }
 
+function revisarVidas() {
+  if (vidasEnemigo == 0) {
+    crearMensajeFinal("Felicitaciones Ganaste")
+  } else if (vidasJugador == 0) {
+    crearMensajeFinal("Lo siento, Perdiste")
+  }
+}
+
 function crearMensaje(mensajeConmbate) {
   let secctionMensaje = document.getElementById("mensajes")
   let parrafo = document.createElement("p")
-  parrafo.innerHTML = "Tu mascota ataco con " + ataqueJugador + ", la mascota del enemigo ataco con " + ataqueEnemigo + " - "+mensajeConmbate
+  parrafo.innerHTML = "Tu mascota ataco con " + ataqueJugador + ", la mascota del enemigo ataco con " + ataqueEnemigo + " - " + mensajeConmbate
+  secctionMensaje.appendChild(parrafo)
+}
+
+function crearMensajeFinal(mensaje) {
+  let secctionMensaje = document.getElementById("mensajes")
+  let parrafo = document.createElement("p")
+  parrafo.innerHTML = mensaje
   secctionMensaje.appendChild(parrafo)
 }
 
