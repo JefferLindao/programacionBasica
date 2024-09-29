@@ -1,5 +1,7 @@
 let ataqueJugador
 let ataqueEnemigo
+let vidasJugador = 3
+let vidasEnemigo = 3
 function iniciarJuego() {
   let botonMascotaJugador = document.getElementById("boton-mascota")
   botonMascotaJugador.addEventListener('click', seleccionarMascotaJudador)
@@ -49,6 +51,7 @@ function ataqueAgua() {
   ataqueJugador = "AGUA"
   ataquAlearioEnemigo()
 }
+
 function ataqueTierra() {
   ataqueJugador = "TIERRA"
   ataquAlearioEnemigo()
@@ -67,25 +70,35 @@ function ataquAlearioEnemigo() {
 }
 
 function combate(){
+  let spanVidasJugador = document.getElementById('vidas-jugador')
+  let spanVidasEnemigo = document.getElementById('vidas-enemigo')
   if (ataqueEnemigo == ataqueJugador) {
     crearMensaje("EMPATE")
   }
   else if (ataqueJugador == "FUEGO" && ataqueEnemigo == "TIERRA") {
     crearMensaje("GANASTE")
+    vidasEnemigo--
+    spanVidasEnemigo.innerHTML = vidasEnemigo
   }
   else if (ataqueJugador == "AGUA" && ataqueEnemigo == "FUEGO") {
     crearMensaje("GANASTE")
+    vidasEnemigo--
+    spanVidasEnemigo.innerHTML = vidasEnemigo
   } else if (ataqueJugador == "TIERRA" && ataqueEnemigo == "AGUA") {
     crearMensaje("GANASTE")
+    vidasEnemigo--
+    spanVidasEnemigo.innerHTML = vidasEnemigo
   } else {
     crearMensaje("PERDISTE")
+    vidasJugador--
+    spanVidasJugador.innerHTML = vidasJugador
   }
 }
 
 function crearMensaje(mensajeConmbate) {
   let secctionMensaje = document.getElementById("mensajes")
   let parrafo = document.createElement("p")
-  parrafo.innerHTML = "Tu mascota ataco con " + ataqueJugador + ", la mascota del enemigo ataco con " + ataqueEnemigo + " - "+mensajeConmbate+" 🎉"
+  parrafo.innerHTML = "Tu mascota ataco con " + ataqueJugador + ", la mascota del enemigo ataco con " + ataqueEnemigo + " - "+mensajeConmbate
   secctionMensaje.appendChild(parrafo)
 }
 
