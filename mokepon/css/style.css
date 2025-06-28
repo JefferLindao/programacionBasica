@@ -59,7 +59,9 @@ body {
 input {
   display: none;
 }
-
+input:checked + label{
+  background-color: #5D8BF4;
+}
 #seleccionar-ataque {
   display: flex;
   flex-direction: column;
