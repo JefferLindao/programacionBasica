@@ -26,6 +26,8 @@ let ataqueMokeponEnemigo = []
 let botonFuego
 let botonAgua
 let botonTierra
+let indexAtaqueJugador
+let indexAtaqueEnemigo
 let botones = []
 let vidasJugador = 3
 let vidasEnemigo = 3
@@ -171,10 +173,27 @@ function ataqueAleatorioEnemigo() {
         ataqueEnemigo.push('TIERRA')
     }
     console.log(ataqueEnemigo)
-    combate()
+    iniciarPelea()
+}
+
+function iniciarPelea() {
+    if (ataqueJugador.length === 5) {
+        combate()
+    }
+}
+
+function indexAmbosOponentes(jugador, enemigo){
+    indexAtaqueJugador = ataqueEnemigo[jugador]
+    indexAtaqueEnemigo = ataqueEnemigo[enemigo]
 }
 
 function combate() {
+    for (let i = 0; i < ataqueJugador.length; i++) {
+        if(ataqueJugador[i]===ataqueDelEnemigo[i]){
+            indexAmbosOponentes(i, i)
+            crearMensaje("EMPATE")
+        }
+    }
     if (ataqueEnemigo == ataqueJugador) {
         crearMensaje("EMPATE")
     } else if (ataqueJugador == 'FUEGO' && ataqueEnemigo == 'TIERRA') {
@@ -210,8 +229,8 @@ function crearMensaje(resultado) {
     let nuevoAtaqueDelJugador = document.createElement('p')
     let nuevoAtaqueDelEnemigo = document.createElement('p')
     sectionMensajes.innerHTML = resultado
-    nuevoAtaqueDelJugador.innerHTML = ataqueJugador
-    nuevoAtaqueDelEnemigo.innerHTML = ataqueEnemigo
+    nuevoAtaqueDelJugador.innerHTML = indexAtaqueJugador
+    nuevoAtaqueDelEnemigo.innerHTML = indexAtaqueEnemigo
     ataqueDelJugador.appendChild(nuevoAtaqueDelJugador)
     ataqueDelEnemigo.appendChild(nuevoAtaqueDelEnemigo)
 }
