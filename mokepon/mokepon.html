@@ -23,7 +23,10 @@
   <section id="ver-mapa">
       <h1 class="titulo">Recorre el mapa con tu mokepon</h1>
       <canvas id="mapa"></canvas>
-      <botton onClick="moverCapipepo()">Mover</botton>
+      <botton onmouseup="detenerMovimiento()" onmousedown="moverArriba()">Arriba</botton>
+      <botton onmouseup="detenerMovimiento()" onmousedown="moverIzquierda()">Izquierda</botton>
+      <botton onmouseup="detenerMovimiento()" onmousedown="moverAbajo()">Abajo</botton>
+      <botton onmouseup="detenerMovimiento()" onmousedown="moverDerecha()">Derecha</botton>
   </section>
 
   <section id="seleccionar-ataque">
