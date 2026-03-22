@@ -40,6 +40,15 @@ let lienzo = mapa.getContext('2d');
 let intervalo;
 let mapaBackground = new Image();
 mapaBackground.src = './assets/mokemap.png';
+let alturaQueBuscamos
+let anchoDelMapa = window.innerWidth - 20
+const anchoMaximoMapa = 350;
+if (anchoDelMapa > anchoMaximoMapa) {
+    anchoDelMapa = anchoMaximoMapa - 20
+}
+alturaQueBuscamos = anchoDelMapa * 600 / 800
+mapa.width = anchoDelMapa
+mapa.height = alturaQueBuscamos
 
 class Mokepon {
     constructor(nombre, foto, vida, fotoMapa, x = 10, y = 10) {
@@ -47,10 +56,10 @@ class Mokepon {
         this.foto = foto
         this.vida = vida
         this.ataques = []
-        this.x = x
-        this.y = y
         this.ancho = 40
         this.alto = 40
+        this.x = aleatorio(0, mapa.width - this.ancho)
+        this.y = aleatorio(0, mapa.height - this.alto)
         this.mapaFoto = new Image()
         this.mapaFoto.src = fotoMapa
         this.velocidadX = 0
@@ -320,7 +329,7 @@ function pintarCanvas() {
     capipepoEnemigo.pintarMokepon()
     ratigueyaEnemigo.pintarMokepon()
     hipodogeEnemigo.pintarMokepon()
-    if (mascotaJugadorObjeto.velocidadX!==0||mascotaJugadorObjeto.velocidadY!==0){
+    if (mascotaJugadorObjeto.velocidadX !== 0 || mascotaJugadorObjeto.velocidadY !== 0) {
         revisarColision(hipodogeEnemigo)
         revisarColision(capipepoEnemigo)
         revisarColision(ratigueyaEnemigo)
@@ -368,8 +377,6 @@ function sePresionoUnaTecla(event) {
 }
 
 function iniciarMapa() {
-    mapa.width = 320
-    mapa.height = 240
     mascotaJugadorObjeto = obtenerObjetoMascota()
     console.log(mascotaJugadorObjeto, mascotaJugador)
 
