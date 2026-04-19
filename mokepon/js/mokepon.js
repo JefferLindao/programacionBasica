@@ -15,6 +15,7 @@ const contenedorAtaques = document.getElementById('contenedor-ataques');
 const sectionVerMapa = document.getElementById('ver-mapa');
 const mapa = document.getElementById('mapa');
 
+let jugadorId = null
 let mokepones = []
 let ataqueJugador = []
 let ataqueEnemigo = []
@@ -154,6 +155,20 @@ function iniciarJuego() {
     botonReiniciar.addEventListener('click', reiniciarJuego)
 }
 
+function unirseAlJuego() {
+    fetch('http://localhost:8080/unirse').then(
+        function (res) {
+            if (res.ok) {
+                res.text()
+                    .then(function (respuesta) {
+                        console.log(respuesta);
+                        jugadorId = respuesta;
+                    })
+            }
+        }
+    )
+}
+
 function seleccionarMascotaJugador() {
     sectionSeleccionarMascota.style.display = 'none'
 
@@ -170,9 +185,23 @@ function seleccionarMascotaJugador() {
         alert('Selecciona una mascota')
     }
 
+    seleccionarMokepon(mascotaJugador);
+
+    extraerAtaques(mascotaJugador)
     sectionVerMapa.style.display = 'flex'
     iniciarMapa()
-    extraerAtaques(mascotaJugador)
+}
+
+function seleccionarMokepon(mascotaJugador) {
+    fetch(`http://localhost:8080/mokepon/${jugadorId}`, {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            mokepon: mascotaJugador
+        }),
+    })
 }
 
 function extraerAtaques(mascotaJugador) {
@@ -326,6 +355,8 @@ function pintarCanvas() {
     lienzo.clearRect(0, 0, mapa.width, mapa.height)
     lienzo.drawImage(mapaBackground, 0, 0, mapa.width, mapa.height)
     mascotaJugadorObjeto.pintarMokepon()
+
+    enviarPosicion(mascotaJugadorObjeto.x, mascotaJugadorObjeto.y)
     capipepoEnemigo.pintarMokepon()
     ratigueyaEnemigo.pintarMokepon()
     hipodogeEnemigo.pintarMokepon()
@@ -334,6 +365,19 @@ function pintarCanvas() {
         revisarColision(capipepoEnemigo)
         revisarColision(ratigueyaEnemigo)
     }
+}
+
+function enviarPosicion(x, y) {
+    fetch(`http://localhost:8080/mokepon/${jugadorId}/posicion`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            x,
+            y
+        })
+    })
 }
 
 function moverDerecha() {
